@@ -454,6 +454,14 @@ body{
     <div class="vichy thin"></div>
     <div class="sec-title">Próximos vuelos y traslados</div>
     <div id="i-proximos"></div>
+    <div class="vichy thin blue"></div>
+    <div class="sec-title">Itinerario completo</div>
+    <div style="display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block"></span>Vuelo</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--sage);display:inline-block"></span>Barco/Ferry</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--rose2);display:inline-block"></span>Estadía</span>
+    </div>
+    <div id="inicio-itin-list"></div>
   </div>
 </div>
 
@@ -762,7 +770,6 @@ function goTo(page,btn){
   document.getElementById('itin-btn').style.display=page==='itin'?'none':'block';
   if(page==='inicio')renderInicio();
   if(page==='flujo')renderFlujo();
-  if(page==='gastos')renderGastos();
   if(page==='previos')renderPrevios();
   if(page==='docs')renderDocs();
   if(page==='itin')renderItin();
@@ -807,6 +814,23 @@ function renderInicio(){
       ${d.time?`<div class="prox-time">${d.f}<br>${d.time}</div>`:''}
     </div>`).join('')}
   </div>`;
+  // itinerario completo en inicio
+  document.getElementById('inicio-itin-list').innerHTML=itin.map(d=>`
+    <div class="itin-day">
+      <div class="itin-date-hdr">
+        <div class="itin-badge">${d.f} · ${d.d}</div>
+        <div class="itin-line"></div>
+      </div>
+      <div class="itin-card">
+        <div class="itin-dot ${d.t}"></div>
+        <div class="itin-body">
+          <div class="itin-place">${d.l}</div>
+          <div class="itin-det">${d.det}</div>
+          ${d.q?`<div class="itin-quien">🎫 ${d.q}</div>`:''}
+        </div>
+        ${d.time?`<div class="itin-time">${d.time}</div>`:''}
+      </div>
+    </div>`).join('');
 }
 
 // ── FLUJO ──
